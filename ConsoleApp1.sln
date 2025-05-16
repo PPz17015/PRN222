@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{65FB09A6-09AA-4C0A-88DD-B3586647511E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{299117FD-23AA-4FA5-A536-70ED32E3E7A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNS", "DNS\DNS.csproj", "{3F57D3E3-5862-49D7-BBE5-1190BFF67C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApp", "ServerApp\ServerApp.csproj", "{F4C86A88-1E5C-483D-9110-1AF9D039EE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{235E92E2-BC33-4D5C-A4E1-0DA7A13D2389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpServerApp", "UdpServerApp\UdpServerApp.csproj", "{047D85AA-FAFD-4C16-9674-95D393DBFBC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpClient", "UdpClient\UdpClient.csproj", "{AB770F64-A278-47AD-9486-48D1D9A14A66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,26 @@ Global
 		{299117FD-23AA-4FA5-A536-70ED32E3E7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{299117FD-23AA-4FA5-A536-70ED32E3E7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{299117FD-23AA-4FA5-A536-70ED32E3E7A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F57D3E3-5862-49D7-BBE5-1190BFF67C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F57D3E3-5862-49D7-BBE5-1190BFF67C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F57D3E3-5862-49D7-BBE5-1190BFF67C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F57D3E3-5862-49D7-BBE5-1190BFF67C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C86A88-1E5C-483D-9110-1AF9D039EE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C86A88-1E5C-483D-9110-1AF9D039EE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C86A88-1E5C-483D-9110-1AF9D039EE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C86A88-1E5C-483D-9110-1AF9D039EE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235E92E2-BC33-4D5C-A4E1-0DA7A13D2389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235E92E2-BC33-4D5C-A4E1-0DA7A13D2389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235E92E2-BC33-4D5C-A4E1-0DA7A13D2389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235E92E2-BC33-4D5C-A4E1-0DA7A13D2389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047D85AA-FAFD-4C16-9674-95D393DBFBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047D85AA-FAFD-4C16-9674-95D393DBFBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047D85AA-FAFD-4C16-9674-95D393DBFBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047D85AA-FAFD-4C16-9674-95D393DBFBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB770F64-A278-47AD-9486-48D1D9A14A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB770F64-A278-47AD-9486-48D1D9A14A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB770F64-A278-47AD-9486-48D1D9A14A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB770F64-A278-47AD-9486-48D1D9A14A66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
