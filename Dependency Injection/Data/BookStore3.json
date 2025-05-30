@@ -1,0 +1,32 @@
+[
+  {
+    "Title": "Hollow Disaster: Belle's Lost Transmission",
+    "Author": "New Eridu Archive",
+    "Price": 0.00,
+    "Topic": "Hollow Disaster"
+  },
+  {
+    "Title": "Agent Files: Von Lycaon Surveillance Footage",
+    "Author": "Section 6 - Intelligence Division",
+    "Price": 3.99,
+    "Topic": "Surveillance Footage"
+  },
+  {
+    "Title": "Battle Log: Anby Demara Combat Simulation",
+    "Author": "Cunning Hares Internal Record",
+    "Price": 2.99,
+    "Topic": "Combat Simulation"
+  },
+  {
+    "Title": "Emergency Broadcast: Soukaku's Warning from the Hollow",
+    "Author": "Public Security Bureau",
+    "Price": 1.99,
+    "Topic": "Emergency Broadcast"
+  },
+  {
+    "Title": "Field Report: Nicole Demara’s Escape Tactics",
+    "Author": "Gentle House Research Logs",
+    "Price": 4.49,
+    "Topic": "Escape Tactics"
+  }
+]

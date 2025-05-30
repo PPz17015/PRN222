@@ -1,0 +1,25 @@
+[
+
+  {
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "Price": 10.99
+  },
+  {
+    "Title": "To Kill a Mockingbird",
+    "Author": "Harper Lee",
+    "Price": 7.99
+
+  },
+  {
+    "Title": "1984",
+    "Author": "George Orwell",
+    "Price": 8.99
+   
+  },
+  {
+    "Title": "Pride and Prejudice",
+    "Author": "Jane Austen",
+    "Price": 6.99
+  }
+]
