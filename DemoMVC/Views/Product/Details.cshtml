@@ -1,0 +1,18 @@
+@model DemoMVC.Models.Product
+@{
+    ViewData["Title"] = "Chi tiết Sản phẩm";
+}
+<h1>Chi tiết Sản phẩm</h1>
+<div>
+    <h4>@Model.Name</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Giá</dt>
+        <dd class="col-sm-10">@Model.Price</dd>
+        <dt class="col-sm-2">Mô tả</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+        <dt class="col-sm-2">Danh mục</dt>
+        <dd class="col-sm-10">@Model.Category</dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div> 

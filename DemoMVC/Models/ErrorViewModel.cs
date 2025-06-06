@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-
-namespace Demo03.Models
+namespace DemoMVC.Models
 {
     public class ErrorViewModel
     {
