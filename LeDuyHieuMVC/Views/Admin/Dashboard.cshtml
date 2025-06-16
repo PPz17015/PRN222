@@ -1,0 +1,180 @@
+@{
+    ViewData["Title"] = "Trang quản trị - FU News Management";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky pt-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-shield fa-3x text-primary mb-2"></i>
+                    <h5>Admin Panel</h5>
+                    <small class="text-muted">@Context.Session.GetString("UserEmail")</small>
+                </div>
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="@Url.Action("Dashboard", "Admin")">
+                            <i class="fas fa-tachometer-alt me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ManageAccounts", "Admin")">
+                            <i class="fas fa-users me-2"></i>
+                            Quản lý tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ManageNews", "Admin")">
+                            <i class="fas fa-newspaper me-2"></i>
+                            Quản lý bài đăng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-danger" href="@Url.Action("Logout", "Account")">
+                            <i class="fas fa-sign-out-alt me-2"></i>
+                            Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">
+                    <i class="fas fa-tachometer-alt me-2"></i>
+                    Dashboard
+                </h1>
+            </div>
+
+            <!-- Welcome message -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Chào mừng bạn đến với trang quản trị FU News Management System!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick actions -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Quản lý tài khoản</h5>
+                            <p class="card-text">Thêm, sửa, xóa và quản lý tài khoản người dùng trong hệ thống.</p>
+                            <a href="@Url.Action("ManageAccounts", "Admin")" class="btn btn-primary">
+                                <i class="fas fa-arrow-right me-2"></i>
+                                Truy cập
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-newspaper fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Quản lý bài đăng</h5>
+                            <p class="card-text">Quản lý, duyệt và chỉnh sửa các bài viết tin tức trong hệ thống.</p>
+                            <a href="@Url.Action("ManageNews", "Admin")" class="btn btn-success">
+                                <i class="fas fa-arrow-right me-2"></i>
+                                Truy cập
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics (placeholder) -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h4 class="mb-3">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        Thống kê tổng quan
+                    </h4>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title">Tổng tài khoản</h6>
+                                    <h3>--</h3>
+                                </div>
+                                <i class="fas fa-users fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title">Tổng bài viết</h6>
+                                    <h3>--</h3>
+                                </div>
+                                <i class="fas fa-newspaper fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title">Bài viết hôm nay</h6>
+                                    <h3>--</h3>
+                                </div>
+                                <i class="fas fa-calendar-day fa-2x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 48px 0 0;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+        border-radius: 0.375rem;
+        margin: 0.125rem 0.5rem;
+    }
+
+    .sidebar .nav-link:hover {
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .sidebar .nav-link.active {
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    main {
+        margin-left: 240px;
+    }
+
+   
+</style> 

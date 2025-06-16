@@ -1,0 +1,108 @@
+@{
+    ViewData["Title"] = "Quản lý bài đăng - FU News Management";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky pt-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-shield fa-3x text-primary mb-2"></i>
+                    <h5>Admin Panel</h5>
+                    <small class="text-muted">@Context.Session.GetString("UserEmail")</small>
+                </div>
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">
+                            <i class="fas fa-tachometer-alt me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ManageAccounts", "Admin")">
+                            <i class="fas fa-users me-2"></i>
+                            Quản lý tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="@Url.Action("ManageNews", "Admin")">
+                            <i class="fas fa-newspaper me-2"></i>
+                            Quản lý bài đăng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-danger" href="@Url.Action("Logout", "Account")">
+                            <i class="fas fa-sign-out-alt me-2"></i>
+                            Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">
+                    <i class="fas fa-newspaper me-2"></i>
+                    Quản lý bài đăng
+                </h1>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-construction me-2"></i>
+                        @ViewBag.Message
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-newspaper fa-5x text-muted mb-4"></i>
+                            <h4>Trang quản lý bài đăng</h4>
+                            <p class="text-muted">Chức năng này sẽ được phát triển trong phiên bản tiếp theo.</p>
+                            <p class="text-muted">Sẽ bao gồm: Thêm, sửa, xóa, duyệt bài viết tin tức.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 48px 0 0;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+        border-radius: 0.375rem;
+        margin: 0.125rem 0.5rem;
+    }
+
+    .sidebar .nav-link:hover {
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .sidebar .nav-link.active {
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    main {
+        margin-left: 240px;
+    }
+
+   
+</style> 

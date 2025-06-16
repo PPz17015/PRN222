@@ -1,0 +1,138 @@
+﻿@model BussinessObject.NewsArticle
+
+@{
+    ViewData["Title"] = "Chỉnh sửa bài viết";
+    var categories = ViewBag.Categories as List<BussinessObject.Category>;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-edit me-2"></i>Chỉnh sửa bài viết
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <input type="hidden" asp-for="NewsArticleId" />
+                        <input type="hidden" asp-for="AccountId" />
+                        <input type="hidden" asp-for="CreatedDate" />
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Headline" class="form-label">
+                                        <i class="fas fa-heading me-1"></i>Tiêu đề bài viết <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Headline" class="form-control" placeholder="Nhập tiêu đề bài viết..." />
+                                    <span asp-validation-for="Headline" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="NewsContent" class="form-label">
+                                        <i class="fas fa-align-left me-1"></i>Nội dung bài viết <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea asp-for="NewsContent" class="form-control" rows="10" 
+                                              placeholder="Nhập nội dung bài viết..."></textarea>
+                                    <span asp-validation-for="NewsContent" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="CategoryId" class="form-label">
+                                        <i class="fas fa-folder me-1"></i>Danh mục <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="CategoryId" class="form-select">
+                                        <option value="">-- Chọn danh mục --</option>
+                                        @if (categories != null)
+                                        {
+                                            @foreach (var category in categories)
+                                            {
+                                                @if (Model.CategoryId == category.CategoryId)
+                                                {
+                                                    <option value="@category.CategoryId" selected>@category.CategoryName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@category.CategoryId">@category.CategoryName</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" asp-for="NewsStatus" id="newsStatus">
+                                        <label class="form-check-label" for="newsStatus">
+                                            <i class="fas fa-eye me-1"></i>Xuất bản
+                                        </label>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        Bài viết sẽ hiển thị công khai nếu được xuất bản
+                                    </small>
+                                </div>
+
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-info-circle me-1"></i>Thông tin bài viết
+                                        </h6>
+                                        <p class="card-text small mb-1">
+                                            <span><strong>Ngày tạo:</strong> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</span>
+                                        </p>
+                                        <p class="card-text small mb-1">
+                                            <strong>Tác giả:</strong> @Model.Account?.AccountEmail
+                                        </p>
+                                        @if (Model.UpdatedDate.HasValue)
+                                        {
+                                            <p class="card-text small mb-1">
+                                                <strong>Cập nhật lần cuối:</strong> @Model.UpdatedDate?.ToString("dd/MM/yyyy HH:mm")
+                                            </p>
+                                        }
+                                        <p class="card-text small mb-0">
+                                            <strong>Người sửa:</strong> @Context.Session.GetString("UserEmail")
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>Quay lại
+                            </a>
+                            <div>
+                                <a asp-action="Details" asp-route-id="@Model.NewsArticleId" class="btn btn-info me-2">
+                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Lưu thay đổi
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

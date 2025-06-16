@@ -1,0 +1,94 @@
+﻿@model BussinessObject.Category
+
+@{
+    ViewData["Title"] = "Thêm thể loại mới";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-plus me-2"></i>Thêm thể loại mới
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.ErrorMessage
+                        </div>
+                    }
+
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CategoryName" class="form-label">
+                                        <i class="fas fa-tag me-1"></i>Tên thể loại <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="CategoryName" class="form-control" placeholder="Nhập tên thể loại..." />
+                                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="ParentCategoryId" class="form-label">
+                                        <i class="fas fa-sitemap me-1"></i>Thể loại cha
+                                    </label>
+                                    <select asp-for="ParentCategoryId" class="form-select">
+                                        <option value="">-- Chọn thể loại cha (tùy chọn) --</option>
+                                        @if (ViewBag.ParentCategories != null)
+                                        {
+                                            @foreach (var category in (IEnumerable<BussinessObject.Category>)ViewBag.ParentCategories)
+                                            {
+                                                <option value="@category.CategoryId">@category.CategoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+                                    <div class="form-text">Để trống nếu đây là thể loại gốc</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CategoryDescription" class="form-label">
+                                <i class="fas fa-align-left me-1"></i>Mô tả
+                            </label>
+                            <textarea asp-for="CategoryDescription" class="form-control" rows="3" 
+                                      placeholder="Nhập mô tả cho thể loại..."></textarea>
+                            <span asp-validation-for="CategoryDescription" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" asp-for="Status" checked />
+                                <label class="form-check-label" asp-for="Status">
+                                    <i class="fas fa-toggle-on me-1"></i>Kích hoạt thể loại
+                                </label>
+                            </div>
+                            <div class="form-text">Thể loại sẽ được kích hoạt ngay sau khi tạo</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i>Tạo thể loại
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
