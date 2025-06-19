@@ -10,7 +10,6 @@ namespace Repository
 {
     public class NewsArticleRepository : INewsArticleRepository
     {
-        // Basic CRUD operations
         public List<NewsArticle> GetAll()
             => new NewsArticleDAO().GetAll();
 
@@ -26,18 +25,13 @@ namespace Repository
         public bool Delete(int id)
             => new NewsArticleDAO().Delete(id);
 
-        
-
-        // Advanced search
         public List<NewsArticle> AdvancedSearch(string? headline = null, int? categoryId = null, int? authorId = null, 
             bool? status = null, DateTime? fromDate = null, DateTime? toDate = null)
             => new NewsArticleDAO().AdvancedSearch(headline, categoryId, authorId, status, fromDate, toDate);
 
-        // Validation
         public bool HeadlineExists(string headline, int? excludeId = null)
             => new NewsArticleDAO().HeadlineExists(headline, excludeId);
 
-        // Statistics
         public int GetCountByStatus(bool status)
             => new NewsArticleDAO().GetCountByStatus(status);
 

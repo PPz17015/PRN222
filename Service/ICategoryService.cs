@@ -20,6 +20,7 @@ namespace Service
         bool IsCategoryNameExists(string categoryName);
         bool IsCategoryNameExists(string categoryName, int excludeId);
         bool CanDeleteCategory(int categoryId);
+        bool HasNewsArticles(int categoryId);
         void UpdateCategoryStatus(int categoryId);
     }
 }

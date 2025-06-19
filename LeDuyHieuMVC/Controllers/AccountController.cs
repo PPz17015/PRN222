@@ -15,62 +15,59 @@ namespace LeDuyHieuMVC.Controllers
             _configuration = configuration;
         }
 
-        // GET: Account/Login
+        //GET: Show login page
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Account/Login
+       
+       //POST: Handle login form submission      
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                ViewBag.ErrorMessage = "Vui lòng nhập đầy đủ email và mật khẩu";
+                ViewBag.ErrorMessage = "Please enter both email and password";
                 return View();
             }
 
-            // Kiểm tra admin account từ appsettings
             var adminEmail = _configuration["AdminAccount:Email"];
             var adminPassword = _configuration["AdminAccount:Password"];
 
             if (email.Trim() == adminEmail && password == adminPassword)
             {
-                // Admin login - chuyển tới trang quản lý Admin
                 HttpContext.Session.SetString("UserEmail", email);
-                HttpContext.Session.SetString("UserRole", "3"); // Admin role = 3
+                HttpContext.Session.SetString("UserRole", "3");
                 return RedirectToAction("Dashboard", "Admin");
             }
 
-            // Kiểm tra tài khoản trong database
             var account = _accountService.Login(email, password);
             if (account != null)
             {
                 HttpContext.Session.SetString("UserEmail", account.AccountEmail);
                 HttpContext.Session.SetString("UserRole", account.AccountRole.ToString());
 
-                // Staff và Lecturer chuyển về trang chủ
                 string roleMessage = account.AccountRole switch
                 {
-                    1 => "Đăng nhập thành công với quyền Staff!",
-                    2 => "Đăng nhập thành công với quyền Lecturer!",
-                    _ => "Đăng nhập thành công!"
+                    1 => "Successfully logged in as Staff!",
+                    2 => "Successfully logged in as Lecturer!",
+                    _ => "Successfully logged in!"
                 };
 
                 TempData["SuccessMessage"] = roleMessage;
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.ErrorMessage = "Email hoặc mật khẩu không đúng";
+            ViewBag.ErrorMessage = "Invalid email or password";
             return View();
         }
 
-        // GET: Account/Logout
+        //GET: Handle user logout
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            TempData["InfoMessage"] = "Bạn đã đăng xuất thành công!";
+            TempData["InfoMessage"] = "You have been successfully logged out!";
             return RedirectToAction("Login");
         }
     }

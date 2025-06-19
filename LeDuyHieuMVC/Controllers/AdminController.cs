@@ -7,18 +7,21 @@ namespace LeDuyHieuMVC.Controllers
     public class AdminController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly INewsArticleService _newsArticleService;
 
-        public AdminController(IAccountService accountService)
+        public AdminController(IAccountService accountService, INewsArticleService newsArticleService)
         {
             _accountService = accountService;
+            _newsArticleService = newsArticleService;
         }
 
-        // GET: Admin/Dashboard
+        /// <summary>
+        /// GET: Admin dashboard page
+        /// </summary>
         public IActionResult Dashboard()
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -26,12 +29,13 @@ namespace LeDuyHieuMVC.Controllers
             return View();
         }
 
-        // GET: Admin/ManageAccounts
+        /// <summary>
+        /// GET: List all accounts for management
+        /// </summary>
         public IActionResult ManageAccounts()
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -40,12 +44,13 @@ namespace LeDuyHieuMVC.Controllers
             return View(accounts);
         }
 
-        // GET: Admin/CreateAccount
+        /// <summary>
+        /// GET: Show create account form
+        /// </summary>
         public IActionResult CreateAccount()
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -53,13 +58,14 @@ namespace LeDuyHieuMVC.Controllers
             return View();
         }
 
-        // POST: Admin/CreateAccount
+        /// <summary>
+        /// POST: Handle create account form submission
+        /// </summary>
         [HttpPost]
         public IActionResult CreateAccount(SystemAccount account)
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -68,24 +74,25 @@ namespace LeDuyHieuMVC.Controllers
             {
                 if (_accountService.Add(account))
                 {
-                    TempData["SuccessMessage"] = "Thêm tài khoản thành công!";
+                    TempData["SuccessMessage"] = "Account created successfully!";
                     return RedirectToAction("ManageAccounts");
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Không thể thêm tài khoản. Email có thể đã tồn tại hoặc thông tin không hợp lệ.";
+                    ViewBag.ErrorMessage = "Cannot create account. Email may already exist or information is invalid.";
                 }
             }
 
             return View(account);
         }
 
-        // GET: Admin/EditAccount/5
+        /// <summary>
+        /// GET: Show edit account form
+        /// </summary>
         public IActionResult EditAccount(int id)
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -99,13 +106,14 @@ namespace LeDuyHieuMVC.Controllers
             return View(account);
         }
 
-        // POST: Admin/EditAccount/5
+        /// <summary>
+        /// POST: Handle edit account form submission
+        /// </summary>
         [HttpPost]
         public IActionResult EditAccount(SystemAccount account)
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -114,54 +122,102 @@ namespace LeDuyHieuMVC.Controllers
             {
                 if (_accountService.Update(account))
                 {
-                    TempData["SuccessMessage"] = "Cập nhật tài khoản thành công!";
+                    TempData["SuccessMessage"] = "Account updated successfully!";
                     return RedirectToAction("ManageAccounts");
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Không thể cập nhật tài khoản. Thông tin không hợp lệ.";
+                    ViewBag.ErrorMessage = "Cannot update account. Information is invalid.";
                 }
             }
 
             return View(account);
         }
 
-        // POST: Admin/DeleteAccount/5
+        /// <summary>
+        /// POST: Handle account deletion
+        /// </summary>
         [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
 
             if (_accountService.Delete(id))
             {
-                TempData["SuccessMessage"] = "Xóa tài khoản thành công!";
+                TempData["SuccessMessage"] = "Account deleted successfully!";
             }
             else
             {
-                TempData["ErrorMessage"] = "Không thể xóa tài khoản.";
+                TempData["ErrorMessage"] = "Cannot delete account.";
             }
 
             return RedirectToAction("ManageAccounts");
         }
 
-        // GET: Admin/ManageNews
+        /// <summary>
+        /// GET: Show news management page
+        /// </summary>
         public IActionResult ManageNews()
         {
-            // Kiểm tra session admin
             var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
+            if (userRole != "3")
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            // TODO: Implement news management
-            ViewBag.Message = "Trang quản lý bài đăng - Chưa được triển khai";
+            ViewBag.Message = "News Management Page - Not yet implemented";
             return View();
+        }
+
+        /// <summary>
+        /// GET: Show articles management page with date filter
+        /// </summary>
+        public IActionResult ManageArticles(DateTime? fromDate, DateTime? toDate)
+        {
+            var userRole = HttpContext.Session.GetString("UserRole");
+            if (userRole != "3")
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var allArticles = _newsArticleService.GetAll();
+            var originalFromDate = fromDate;
+            var originalToDate = toDate;
+            if (!fromDate.HasValue)
+                fromDate = DateTime.Now.AddMonths(-1);
+            if (!toDate.HasValue)
+                toDate = DateTime.Now;
+            var filterFromDate = fromDate.Value.Date;
+            var filterToDate = toDate.Value.Date;
+            var filteredArticles = new List<NewsArticle>();
+            var debugDetails = new List<string>();
+
+            foreach (var article in allArticles)
+            {
+                var articleDate = article.CreatedDate.Date;
+                var isInRange = articleDate >= filterFromDate && articleDate <= filterToDate;
+                
+                debugDetails.Add($"ID:{article.NewsArticleId} Date:{articleDate:yyyy-MM-dd} InRange:{isInRange}");
+                
+                if (isInRange)
+                {
+                    filteredArticles.Add(article);
+                }
+            }
+
+            filteredArticles = filteredArticles.OrderByDescending(a => a.CreatedDate).ToList();
+
+            ViewBag.FromDate = fromDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.ToDate = toDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.TotalArticles = filteredArticles.Count;
+            ViewBag.PublishedCount = filteredArticles.Count(a => a.NewsStatus);
+            ViewBag.DraftCount = filteredArticles.Count(a => !a.NewsStatus);
+
+            return View(filteredArticles);
         }
     }
 } 

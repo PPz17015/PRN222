@@ -1,7 +1,7 @@
 ﻿@model BussinessObject.NewsArticle
 
 @{
-    ViewData["Title"] = "Tạo Bài Viết Mới";
+    ViewData["Title"] = "Create New Article";
     var categories = ViewBag.Categories as List<BussinessObject.Category>;
 }
 
@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title mb-0">
-                        <i class="fas fa-plus me-2"></i>Thêm bài viết mới
+                        <i class="fas fa-plus me-2"></i>Create New Article
                     </h3>
                 </div>
                 <div class="card-body">
@@ -59,51 +59,37 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="mb-3">
-                                    <label asp-for="Headline" class="form-label">
-                                        <i class="fas fa-heading me-1"></i>Tiêu đề bài viết <span class="text-danger">*</span>
-                                    </label>
-                                    <input asp-for="Headline" class="form-control" placeholder="Nhập tiêu đề bài viết..." />
+                                    <label asp-for="Headline" class="form-label">Headline</label>
+                                    <input asp-for="Headline" class="form-control" required />
                                     <span asp-validation-for="Headline" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label asp-for="NewsContent" class="form-label">
-                                        <i class="fas fa-align-left me-1"></i>Nội dung bài viết <span class="text-danger">*</span>
-                                    </label>
-                                    <textarea asp-for="NewsContent" class="form-control" rows="10" 
-                                              placeholder="Nhập nội dung bài viết..."></textarea>
+                                    <label asp-for="NewsContent" class="form-label">Content</label>
+                                    <textarea asp-for="NewsContent" class="form-control" rows="10" required></textarea>
                                     <span asp-validation-for="NewsContent" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label asp-for="CategoryId" class="form-label">
-                                        <i class="fas fa-folder me-1"></i>Danh mục <span class="text-danger">*</span>
-                                    </label>
-                                    <select asp-for="CategoryId" class="form-select">
-                                        <option value="">-- Chọn danh mục --</option>
-                                        @if (categories != null)
+                                    <label asp-for="CategoryId" class="form-label">Category</label>
+                                    <select asp-for="CategoryId" class="form-select" required>
+                                        <option value="">Select a category</option>
+                                        @foreach (var category in categories)
                                         {
-                                            @foreach (var category in categories)
-                                            {
-                                                <option value="@category.CategoryId">@category.CategoryName</option>
-                                            }
+                                            <option value="@category.CategoryId">@category.CategoryName</option>
                                         }
                                     </select>
                                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                                 </div>
 
                                 <div class="mb-3">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" asp-for="NewsStatus" id="newsStatus">
-                                        <label class="form-check-label" for="newsStatus">
-                                            <i class="fas fa-eye me-1"></i>Xuất bản ngay
-                                        </label>
+                                    <div class="form-check">
+                                        <input asp-for="NewsStatus" class="form-check-input" type="checkbox" />
+                                        <label asp-for="NewsStatus" class="form-check-label">Publish immediately</label>
                                     </div>
-                                    <small class="form-text text-muted">
-                                        Bài viết sẽ hiển thị công khai nếu được xuất bản
-                                    </small>
+                                    <span asp-validation-for="NewsStatus" class="text-danger"></span>
                                 </div>
 
                                 <div class="card bg-light">
@@ -125,10 +111,10 @@
                         <hr>
                         <div class="d-flex justify-content-between">
                             <a asp-action="Index" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-1"></i>Quay lại
+                                <i class="fas fa-arrow-left me-2"></i>Back to List
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i>Lưu bài viết
+                                <i class="fas fa-save me-2"></i>Create Article
                             </button>
                         </div>
                     </form>

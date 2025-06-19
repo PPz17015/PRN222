@@ -5,7 +5,6 @@ namespace DataAccessObject
 {
     public class NewsArticleDAO
     {
-        // Get all news articles with related data
         public List<NewsArticle> GetAll()
         {
             using (var context = new FunewsManagementContext())
@@ -18,7 +17,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news article by ID with related data
         public NewsArticle? GetById(int id)
         {
             using (var context = new FunewsManagementContext())
@@ -30,7 +28,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news articles by status
         public List<NewsArticle> GetByStatus(bool status)
         {
             using (var context = new FunewsManagementContext())
@@ -44,7 +41,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news articles by category
         public List<NewsArticle> GetByCategory(int categoryId)
         {
             using (var context = new FunewsManagementContext())
@@ -58,7 +54,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news articles by author
         public List<NewsArticle> GetByAuthor(int accountId)
         {
             using (var context = new FunewsManagementContext())
@@ -72,7 +67,6 @@ namespace DataAccessObject
             }
         }
 
-        // Search news articles by headline
         public List<NewsArticle> SearchByHeadline(string keyword)
         {
             using (var context = new FunewsManagementContext())
@@ -86,7 +80,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news articles by date range
         public List<NewsArticle> GetByDateRange(DateTime fromDate, DateTime toDate)
         {
             using (var context = new FunewsManagementContext())
@@ -100,7 +93,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get latest news articles
         public List<NewsArticle> GetLatest(int count = 10)
         {
             using (var context = new FunewsManagementContext())
@@ -115,7 +107,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get news articles with pagination
         public (List<NewsArticle> articles, int totalCount) GetWithPagination(int page, int pageSize, bool? status = null, int? categoryId = null)
         {
             using (var context = new FunewsManagementContext())
@@ -125,7 +116,6 @@ namespace DataAccessObject
                     .Include(n => n.Account)
                     .AsQueryable();
 
-                // Apply filters
                 if (status.HasValue)
                 {
                     query = query.Where(n => n.NewsStatus == status.Value);
@@ -147,7 +137,6 @@ namespace DataAccessObject
             }
         }
 
-        // Add new news article
         public bool Add(NewsArticle newsArticle)
         {
             try
@@ -160,15 +149,12 @@ namespace DataAccessObject
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                // Log exception for debugging if needed
-                System.Diagnostics.Debug.WriteLine($"Exception in Add(): {ex.Message}");
                 return false;
             }
         }
 
-        // Update news article
         public bool Update(NewsArticle newsArticle)
         {
             try
@@ -196,7 +182,6 @@ namespace DataAccessObject
             }
         }
 
-        // Delete news article
         public bool Delete(int id)
         {
             try
@@ -217,7 +202,6 @@ namespace DataAccessObject
             }
         }
 
-        // Check if headline exists (for validation)
         public bool HeadlineExists(string headline, int? excludeId = null)
         {
             using (var context = new FunewsManagementContext())
@@ -231,7 +215,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get count by status
         public int GetCountByStatus(bool status)
         {
             using (var context = new FunewsManagementContext())
@@ -240,7 +223,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get count by category
         public int GetCountByCategory(int categoryId)
         {
             using (var context = new FunewsManagementContext())
@@ -249,7 +231,6 @@ namespace DataAccessObject
             }
         }
 
-        // Get count by author
         public int GetCountByAuthor(int accountId)
         {
             using (var context = new FunewsManagementContext())
@@ -258,24 +239,21 @@ namespace DataAccessObject
             }
         }
 
-        // Get articles for dashboard statistics
         public Dictionary<string, int> GetStatistics()
         {
             using (var context = new FunewsManagementContext())
             {
-                var stats = new Dictionary<string, int>
+                return new Dictionary<string, int>
                 {
-                    ["Total"] = context.NewsArticles.Count(),
-                    ["Published"] = context.NewsArticles.Count(n => n.NewsStatus == true),
-                    ["Draft"] = context.NewsArticles.Count(n => n.NewsStatus == false),
-                    ["ThisMonth"] = context.NewsArticles.Count(n => n.CreatedDate.Month == DateTime.Now.Month && n.CreatedDate.Year == DateTime.Now.Year),
-                    ["Today"] = context.NewsArticles.Count(n => n.CreatedDate.Date == DateTime.Today)
+                    { "TotalArticles", context.NewsArticles.Count() },
+                    { "PublishedArticles", context.NewsArticles.Count(n => n.NewsStatus == true) },
+                    { "DraftArticles", context.NewsArticles.Count(n => n.NewsStatus == false) },
+                    { "Categories", context.Categories.Count() },
+                    { "Authors", context.SystemAccounts.Count() }
                 };
-                return stats;
             }
         }
 
-        // Advanced search with multiple criteria
         public List<NewsArticle> AdvancedSearch(string? headline = null, int? categoryId = null, int? authorId = null, 
             bool? status = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
@@ -286,10 +264,9 @@ namespace DataAccessObject
                     .Include(n => n.Account)
                     .AsQueryable();
 
-                if (!string.IsNullOrEmpty(headline))
+                if (!string.IsNullOrWhiteSpace(headline))
                 {
-                    query = query.Where(n => n.Headline.Contains(headline) || 
-                                            (n.NewsContent != null && n.NewsContent.Contains(headline)));
+                    query = query.Where(n => n.Headline.Contains(headline));
                 }
 
                 if (categoryId.HasValue)

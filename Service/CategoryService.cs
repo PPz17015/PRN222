@@ -38,10 +38,8 @@ namespace Service
             if (category == null) return false;
             if (string.IsNullOrWhiteSpace(category.CategoryName)) return false;
 
-            // Kiểm tra tên category đã tồn tại chưa
             if (IsCategoryNameExists(category.CategoryName)) return false;
 
-            // Kiểm tra ParentCategoryId hợp lệ (nếu có)
             if (category.ParentCategoryId.HasValue)
             {
                 var parentCategory = repository.GetById(category.ParentCategoryId.Value);
@@ -64,23 +62,18 @@ namespace Service
             if (category == null || category.CategoryId <= 0) return false;
             if (string.IsNullOrWhiteSpace(category.CategoryName)) return false;
 
-            // Kiểm tra category tồn tại
             var existingCategory = repository.GetById(category.CategoryId);
             if (existingCategory == null) return false;
 
-            // Kiểm tra tên category trùng (trừ chính nó)
             if (IsCategoryNameExists(category.CategoryName, category.CategoryId)) return false;
 
-            // Kiểm tra ParentCategoryId hợp lệ (nếu có)
             if (category.ParentCategoryId.HasValue)
             {
-                // Không thể set parent là chính nó
                 if (category.ParentCategoryId.Value == category.CategoryId) return false;
 
                 var parentCategory = repository.GetById(category.ParentCategoryId.Value);
                 if (parentCategory == null) return false;
 
-                // Không thể set parent là con của chính nó (tránh circular reference)
                 if (IsCircularReference(category.CategoryId, category.ParentCategoryId.Value)) return false;
             }
 
@@ -99,7 +92,6 @@ namespace Service
         {
             if (id <= 0) return false;
 
-            // Kiểm tra có thể xóa không
             if (!CanDeleteCategory(id)) return false;
 
             try
@@ -130,13 +122,17 @@ namespace Service
         {
             if (categoryId <= 0) return false;
 
-            // Không thể xóa nếu có category con
             if (repository.HasChildCategories(categoryId)) return false;
 
-            // Không thể xóa nếu có bài viết
             if (repository.HasNewsArticles(categoryId)) return false;
 
             return true;
+        }
+
+        public bool HasNewsArticles(int categoryId)
+        {
+            if (categoryId <= 0) return false;
+            return repository.HasNewsArticles(categoryId);
         }
 
         public void UpdateCategoryStatus(int categoryId)
@@ -146,7 +142,6 @@ namespace Service
             var category = repository.GetById(categoryId);
             if (category == null) return;
 
-            // Tính status dựa trên việc có bài viết hay không
             var hasArticles = repository.HasNewsArticles(categoryId);
             
             if (category.Status != hasArticles)

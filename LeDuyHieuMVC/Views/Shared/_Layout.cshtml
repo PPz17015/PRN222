@@ -18,27 +18,29 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <i class="fas fa-newspaper me-2"></i>FU News Management
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-1"></i>Trang chủ
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">
-                                <i class="fas fa-tags me-1"></i>Quản lý thể loại
+                                <i class="fas fa-home me-1"></i>Home
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="NewsArticles" asp-action="Index">
-                                <i class="fas fa-newspaper me-1"></i>Quản lý bài viết
+                                <i class="fas fa-newspaper me-1"></i>Articles
                             </a>
                         </li>
+                        @if (Context.Session.GetString("UserRole") == "1" || Context.Session.GetString("UserRole") == "3")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">
+                                    <i class="fas fa-tags me-1"></i>Categories
+                                </a>
+                            </li>
+                        }
                         @if (Context.Session.GetString("UserRole") == "3")
                         {
                             <li class="nav-item">
@@ -56,9 +58,9 @@
                                     <i class="fas fa-user me-1"></i>@Context.Session.GetString("UserEmail")
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-1"></i>Hồ sơ</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-1"></i>Profile</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt me-1"></i>Đăng xuất</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a></li>
                                 </ul>
                             </li>
                         }
@@ -66,7 +68,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">
-                                    <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                                    <i class="fas fa-sign-in-alt me-1"></i>Login
                                 </a>
                             </li>
                         }
@@ -75,7 +77,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -83,7 +85,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - FU News Management System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - FU News Management - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

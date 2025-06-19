@@ -1,10 +1,10 @@
 @{
-    ViewData["Title"] = "Đăng nhập - FU News Management";
+    ViewData["Title"] = "Login - FU News Management";
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,25 +53,18 @@
         .btn-login {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
-            border-radius: 25px;
-            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            padding: 0.75rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s;
+            margin-top: 2rem;
         }
         .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        .alert {
-            border-radius: 10px;
-            border: none;
+            opacity: 0.9;
         }
         .input-group {
             margin-bottom: 1.5rem;
         }
-        .input-group i {
+        .input-group-text {
             color: #667eea;
         }
     </style>
@@ -80,8 +73,8 @@
     <div class="login-container">
         <div class="login-header">
             <i class="fas fa-newspaper fa-3x mb-3"></i>
-            <h2>FU News Management</h2>
-            <p class="mb-0">Đăng nhập vào hệ thống</p>
+            <h3 class="mb-0">FU News Management</h3>
+            <p class="text-white-50 mb-0">Login to access the system</p>
         </div>
         <div class="login-body">
             @if (TempData["InfoMessage"] != null)
@@ -111,13 +104,13 @@
                     <span class="input-group-text bg-transparent border-0">
                         <i class="fas fa-lock"></i>
                     </span>
-                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                 </div>
                 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary btn-login">
                         <i class="fas fa-sign-in-alt me-2"></i>
-                        Đăng nhập
+                        Login
                     </button>
                 </div>
             </form>
@@ -125,7 +118,7 @@
             <div class="mt-4 text-center">
                 <small class="text-muted">
                     <i class="fas fa-info-circle me-1"></i>
-                    Sử dụng tài khoản được cấp để đăng nhập
+                    Use your provided account credentials to login
                 </small>
             </div>
         </div>

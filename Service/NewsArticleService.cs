@@ -18,8 +18,6 @@ namespace Service
             _newsArticleRepository = newsArticleRepository;
             _categoryRepository = categoryRepository;
         }
-
-        // Basic CRUD operations
         public List<NewsArticle> GetAll()
         {
             return _newsArticleRepository.GetAll();
@@ -32,40 +30,34 @@ namespace Service
 
         public bool Add(NewsArticle newsArticle)
         {
-            // Validation
             if (string.IsNullOrWhiteSpace(newsArticle.Headline))
                 return false;
 
             if (HeadlineExists(newsArticle.Headline))
                 return false;
 
-            // Check if category exists
             var category = _categoryRepository.GetById(newsArticle.CategoryId);
             if (category == null)
                 return false;
 
-            // Set default values
             newsArticle.CreatedDate = DateTime.Now;
-            newsArticle.NewsStatus = newsArticle.NewsStatus; // Keep the provided status
+            newsArticle.NewsStatus = newsArticle.NewsStatus; 
 
             return _newsArticleRepository.Add(newsArticle);
         }
 
         public bool Update(NewsArticle newsArticle)
         {
-            // Validation
+            // 
             if (string.IsNullOrWhiteSpace(newsArticle.Headline))
                 return false;
 
             if (HeadlineExists(newsArticle.Headline, newsArticle.NewsArticleId))
                 return false;
-
-            // Check if category exists
             var category = _categoryRepository.GetById(newsArticle.CategoryId);
             if (category == null)
                 return false;
 
-            // Check if article exists
             var existingArticle = GetById(newsArticle.NewsArticleId);
             if (existingArticle == null)
                 return false;
@@ -81,29 +73,24 @@ namespace Service
             return _newsArticleRepository.Delete(id);
         }
 
-        // Advanced search
         public List<NewsArticle> AdvancedSearch(string? headline = null, int? categoryId = null, int? authorId = null, 
             bool? status = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
             return _newsArticleRepository.AdvancedSearch(headline, categoryId, authorId, status, fromDate, toDate);
         }
 
-        // Validation
         public bool HeadlineExists(string headline, int? excludeId = null)
         {
             return _newsArticleRepository.HeadlineExists(headline, excludeId);
         }
 
 
-
-        // Business logic methods
         public bool CanDeleteArticle(int articleId)
         {
             var article = GetById(articleId);
             if (article == null)
                 return false;
 
-            // Can always delete articles (no dependencies like categories)
             return true;
         }
 
@@ -113,7 +100,6 @@ namespace Service
             if (article == null)
                 return false;
 
-            // Validation: Article must have content to be published
             if (string.IsNullOrWhiteSpace(article.NewsContent))
                 return false;
 

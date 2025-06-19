@@ -37,10 +37,8 @@ namespace Service
                 string.IsNullOrWhiteSpace(account.AccountEmail) ||
                 string.IsNullOrWhiteSpace(account.AccountPassword)) return false;
 
-            // Kiểm tra email đã tồn tại chưa
             if (IsEmailExists(account.AccountEmail)) return false;
 
-            // Kiểm tra role hợp lệ (1: Staff, 2: Lecturer)
             if (account.AccountRole < 1 || account.AccountRole > 2) return false;
 
             try
@@ -61,7 +59,6 @@ namespace Service
                 string.IsNullOrWhiteSpace(account.AccountEmail) ||
                 string.IsNullOrWhiteSpace(account.AccountPassword)) return false;
 
-            // Kiểm tra role hợp lệ (1: Staff, 2: Lecturer)
             if (account.AccountRole < 1 || account.AccountRole > 2) return false;
 
             try

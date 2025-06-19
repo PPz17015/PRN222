@@ -22,23 +22,24 @@ namespace LeDuyHieuMVC.Controllers
             _accountService = accountService;
         }
 
-        // GET: NewsArticles
+        /// <summary>
+        /// GET: List all news articles based on user role
+        /// </summary>
         public IActionResult Index()
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             List<NewsArticle> articles;
 
-            if (userRole == "2") // Lecturer - chỉ xem articles published
+            if (userRole == "2")
             {
                 articles = _newsArticleService.GetPublishedArticles();
             }
-            else if (userRole == "1" || userRole == "3") // Staff hoặc Admin - xem tất cả
+            else if (userRole == "1" || userRole == "3")
             {
                 articles = _newsArticleService.GetAll();
             }
             else
             {
-                // Chưa đăng nhập - chỉ xem published
                 articles = _newsArticleService.GetPublishedArticles();
             }
 
@@ -46,7 +47,9 @@ namespace LeDuyHieuMVC.Controllers
             return View(articles);
         }
 
-        // GET: NewsArticles/Details/5
+        /// <summary>
+        /// GET: Show article details
+        /// </summary>
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -62,7 +65,6 @@ namespace LeDuyHieuMVC.Controllers
 
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Lecturer chỉ được xem articles published
             if (userRole == "2" && newsArticle.NewsStatus == false)
             {
                 return Forbid();
@@ -71,12 +73,13 @@ namespace LeDuyHieuMVC.Controllers
             return View(newsArticle);
         }
 
-        // GET: NewsArticles/Create
+        /// <summary>
+        /// GET: Show create article form
+        /// </summary>
         public IActionResult Create()
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được tạo article
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -87,51 +90,44 @@ namespace LeDuyHieuMVC.Controllers
             return View();
         }
 
-        // POST: NewsArticles/Create
+        /// <summary>
+        /// POST: Handle create article form submission
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Headline,NewsContent,NewsStatus,CategoryId,AccountId")] NewsArticle newsArticle)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được tạo article
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
             }
 
-            // Lấy AccountId từ session
             var currentUserId = GetCurrentUserId();
             ViewBag.DebugUserId = currentUserId;
             ViewBag.DebugUserEmail = HttpContext.Session.GetString("UserEmail");
             
             if (currentUserId == 0)
             {
-                ViewBag.ErrorMessage = "Không thể xác định người dùng hiện tại. Vui lòng đăng nhập lại.";
+                ViewBag.ErrorMessage = "Cannot identify current user. Please log in again.";
                 ViewBag.Categories = _categoryService.GetAll();
                 return View(newsArticle);
             }
 
-            // Set AccountId
             newsArticle.AccountId = currentUserId;
-
-            // Set CreatedDate (required field)  
             newsArticle.CreatedDate = DateTime.Now;
 
-            // Remove navigation property validation (chúng ta chỉ cần foreign keys)
             ModelState.Remove("Account");
             ModelState.Remove("Category");
-            
-            // Remove AccountId validation vì chúng ta tự set giá trị này
             ModelState.Remove("AccountId");
 
-            // Validate CategoryId exists
             if (newsArticle.CategoryId > 0)
             {
                 var category = _categoryService.GetById(newsArticle.CategoryId);
                 if (category == null)
                 {
-                    ModelState.AddModelError("CategoryId", "Danh mục được chọn không tồn tại.");
+                    ModelState.AddModelError("CategoryId", "Selected category does not exist.");
                 }
                 else
                 {
@@ -139,7 +135,6 @@ namespace LeDuyHieuMVC.Controllers
                 }
             }
 
-            // Debug: Check if account exists
             if (currentUserId > 0)
             {
                 var account = _accountService.GetById(currentUserId);
@@ -149,7 +144,6 @@ namespace LeDuyHieuMVC.Controllers
             ViewBag.DebugModelState = ModelState.IsValid;
             ViewBag.DebugData = $"Headline: {newsArticle.Headline}, CategoryId: {newsArticle.CategoryId}, AccountId: {newsArticle.AccountId}";
 
-            // Debug: Show ModelState errors
             if (!ModelState.IsValid)
             {
                 var errors = new List<string>();
@@ -172,12 +166,12 @@ namespace LeDuyHieuMVC.Controllers
                     
                     if (result)
                     {
-                        TempData["SuccessMessage"] = "Thêm bài viết thành công!";
+                        TempData["SuccessMessage"] = "Article created successfully!";
                         return RedirectToAction(nameof(Index));
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "Service.Add() returned false. Kiểm tra validation hoặc database.";
+                        ViewBag.ErrorMessage = "Service.Add() returned false. Check validation or database.";
                     }
                 }
                 catch (Exception ex)
@@ -191,12 +185,13 @@ namespace LeDuyHieuMVC.Controllers
             return View(newsArticle);
         }
 
-        // GET: NewsArticles/Edit/5
+        /// <summary>
+        /// GET: Show edit article form
+        /// </summary>
         public IActionResult Edit(int? id)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được sửa article
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -218,14 +213,15 @@ namespace LeDuyHieuMVC.Controllers
             return View(newsArticle);
         }
 
-        // POST: NewsArticles/Edit/5
+        /// <summary>
+        /// POST: Handle edit article form submission
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("NewsArticleId,Headline,NewsContent,NewsStatus,CategoryId,AccountId,CreatedDate")] NewsArticle newsArticle)
+        public IActionResult Edit(int id, [Bind("NewsArticleId,Headline,NewsContent,NewsStatus,CategoryId,AccountId,CreatedDate,UpdatedBy,UpdatedDate,ModifiedDate")] NewsArticle newsArticle)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được sửa article
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -236,61 +232,95 @@ namespace LeDuyHieuMVC.Controllers
                 return NotFound();
             }
 
-            // Lấy current user để set UpdatedBy
             var currentUserId = GetCurrentUserId();
             if (currentUserId == 0)
             {
-                ViewBag.ErrorMessage = "Không thể xác định người dùng hiện tại. Vui lòng đăng nhập lại.";
+                ViewBag.ErrorMessage = "Cannot identify current user. Please log in again.";
                 ViewBag.Categories = _categoryService.GetAll();
                 return View(newsArticle);
             }
 
-            // Set UpdatedBy
+            // Set update information
             newsArticle.UpdatedBy = currentUserId;
+            newsArticle.UpdatedDate = DateTime.Now;
+            newsArticle.ModifiedDate = DateTime.Now;
 
-            // Validate CategoryId exists
-            if (newsArticle.CategoryId > 0)
+            // Remove Account and Category from ModelState validation as they are navigation properties
+            ModelState.Remove("Account");
+            ModelState.Remove("Category");
+
+            // Validate category exists
+            if (newsArticle.CategoryId <= 0)
+            {
+                ModelState.AddModelError("CategoryId", "Please select a valid category.");
+            }
+            else
             {
                 var category = _categoryService.GetById(newsArticle.CategoryId);
                 if (category == null)
                 {
-                    ModelState.AddModelError("CategoryId", "Danh mục được chọn không tồn tại.");
+                    ModelState.AddModelError("CategoryId", "Selected category does not exist.");
                 }
             }
 
-            // Validate AccountId exists
-            if (newsArticle.AccountId > 0)
+            // Validate account exists
+            if (newsArticle.AccountId <= 0)
+            {
+                ModelState.AddModelError("AccountId", "Author information is invalid.");
+            }
+            else
             {
                 var account = _accountService.GetById(newsArticle.AccountId);
                 if (account == null)
                 {
-                    ModelState.AddModelError("AccountId", "Tác giả không tồn tại.");
+                    ModelState.AddModelError("AccountId", "Author does not exist.");
                 }
             }
 
             if (ModelState.IsValid)
             {
-                if (_newsArticleService.Update(newsArticle))
+                try
                 {
-                    TempData["SuccessMessage"] = "Cập nhật bài viết thành công!";
-                    return RedirectToAction(nameof(Index));
+                    if (_newsArticleService.Update(newsArticle))
+                    {
+                        TempData["SuccessMessage"] = "Article updated successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Cannot update article. Title may already exist or category is invalid.";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ViewBag.ErrorMessage = "Không thể cập nhật bài viết. Tiêu đề có thể đã tồn tại.";
+                    ViewBag.ErrorMessage = $"Error updating article: {ex.Message}";
                 }
+            }
+            else
+            {
+                // Debug ModelState errors
+                var errors = new List<string>();
+                foreach (var modelError in ModelState)
+                {
+                    foreach (var error in modelError.Value.Errors)
+                    {
+                        errors.Add($"{modelError.Key}: {error.ErrorMessage}");
+                    }
+                }
+                ViewBag.ErrorMessage = "Validation errors: " + string.Join(" | ", errors);
             }
             
             ViewBag.Categories = _categoryService.GetAll();
             return View(newsArticle);
         }
 
-        // GET: NewsArticles/Delete/5
+        /// <summary>
+        /// GET: Show delete article confirmation
+        /// </summary>
         public IActionResult Delete(int? id)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được xóa article
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -311,37 +341,40 @@ namespace LeDuyHieuMVC.Controllers
             return View(newsArticle);
         }
 
-        // POST: NewsArticles/Delete/5
+        /// <summary>
+        /// POST: Handle article deletion
+        /// </summary>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            if (userRole != "1" )
+            if (userRole != "1")
             {
                 return Forbid();
             }
 
             if (_newsArticleService.Delete(id))
             {
-                TempData["SuccessMessage"] = "Xóa bài viết thành công!";
+                TempData["SuccessMessage"] = "Article deleted successfully!";
             }
             else
             {
-                TempData["ErrorMessage"] = "Không thể xóa bài viết.";
+                TempData["ErrorMessage"] = "Cannot delete article.";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        // Publish/Unpublish actions
+        /// <summary>
+        /// POST: Publish an article
+        /// </summary>
         [HttpPost]
         public IActionResult Publish(int id)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được publish
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -349,22 +382,24 @@ namespace LeDuyHieuMVC.Controllers
 
             if (_newsArticleService.PublishArticle(id, GetCurrentUserId()))
             {
-                TempData["SuccessMessage"] = "Đã xuất bản bài viết!";
+                TempData["SuccessMessage"] = "Article has been published!";
             }
             else
             {
-                TempData["ErrorMessage"] = "Không thể xuất bản bài viết. Bài viết phải có nội dung.";
+                TempData["ErrorMessage"] = "Cannot publish article. Article must have content.";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// POST: Unpublish an article
+        /// </summary>
         [HttpPost]
         public IActionResult Unpublish(int id)
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            // Chỉ Staff và Admin được unpublish
             if (userRole != "1" && userRole != "3")
             {
                 return Forbid();
@@ -372,21 +407,23 @@ namespace LeDuyHieuMVC.Controllers
 
             if (_newsArticleService.UnpublishArticle(id, GetCurrentUserId()))
             {
-                TempData["SuccessMessage"] = "Đã hủy xuất bản bài viết!";
+                TempData["SuccessMessage"] = "Article has been unpublished!";
             }
             else
             {
-                TempData["ErrorMessage"] = "Không thể hủy xuất bản bài viết.";
+                TempData["ErrorMessage"] = "Cannot unpublish article.";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Get current user ID from session
+        /// </summary>
         private int GetCurrentUserId()
         {
             var userEmail = HttpContext.Session.GetString("UserEmail");
             
-            // Debug: Log session info
             ViewBag.DebugSessionEmail = userEmail;
             ViewBag.DebugSessionKeys = string.Join(", ", HttpContext.Session.Keys);
             
@@ -398,7 +435,6 @@ namespace LeDuyHieuMVC.Controllers
 
             var user = _accountService.GetByEmail(userEmail);
             
-            // Debug: Log account lookup result
             ViewBag.DebugAccountLookup = user != null ? $"Found user: {user.AccountEmail} (ID: {user.AccountId})" : "User not found in database";
             
             return user?.AccountId ?? 0;
