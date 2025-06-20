@@ -24,7 +24,7 @@ namespace LeDuyHieuMVC.Controllers
         private bool CheckAccess()
         {
             var userRole = HttpContext.Session.GetString("UserRole");
-            return userRole == "3" || userRole == "1";
+            return  userRole == "1";
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                
                 return RedirectToAction("Index", "Home");
             }
 
@@ -49,7 +49,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -74,7 +73,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -91,7 +89,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -119,7 +116,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -147,7 +143,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -180,7 +175,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -211,7 +205,6 @@ namespace LeDuyHieuMVC.Controllers
         {
             if (!CheckAccess())
             {
-                TempData["ErrorMessage"] = "You do not have permission to access this page.";
                 return RedirectToAction("Index", "Home");
             }
 

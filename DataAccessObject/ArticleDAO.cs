@@ -7,135 +7,131 @@ namespace DataAccessObject
     {
         public List<NewsArticle> GetAll()
         {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
+            using var context = new FunewsManagementContext();
+            return context.NewsArticles
+                .Include(n => n.Category)
+                .Include(n => n.Account)
+                .OrderByDescending(n => n.CreatedDate)
+                .ToList();
         }
 
         public NewsArticle? GetById(int id)
         {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .FirstOrDefault(n => n.NewsArticleId == id);
-            }
+            using var context = new FunewsManagementContext();
+            return context.NewsArticles
+                .Include(n => n.Category)
+                .Include(n => n.Account)
+                .FirstOrDefault(n => n.NewsArticleId == id);
         }
 
-        public List<NewsArticle> GetByStatus(bool status)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.NewsStatus == status)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> GetByStatus(bool status)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.NewsStatus == status)
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .ToList();
+        //    }
+        //}
 
-        public List<NewsArticle> GetByCategory(int categoryId)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.CategoryId == categoryId)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> GetByCategory(int categoryId)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.CategoryId == categoryId)
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .ToList();
+        //    }
+        //}
 
-        public List<NewsArticle> GetByAuthor(int accountId)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.AccountId == accountId)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> GetByAuthor(int accountId)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.AccountId == accountId)
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .ToList();
+        //    }
+        //}
 
-        public List<NewsArticle> SearchByHeadline(string keyword)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.Headline.Contains(keyword))
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> SearchByHeadline(string keyword)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.Headline.Contains(keyword))
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .ToList();
+        //    }
+        //}
 
-        public List<NewsArticle> GetByDateRange(DateTime fromDate, DateTime toDate)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.CreatedDate >= fromDate && n.CreatedDate <= toDate)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> GetByDateRange(DateTime fromDate, DateTime toDate)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.CreatedDate >= fromDate && n.CreatedDate <= toDate)
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .ToList();
+        //    }
+        //}
 
-        public List<NewsArticle> GetLatest(int count = 10)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .Where(n => n.NewsStatus == true)
-                    .OrderByDescending(n => n.CreatedDate)
-                    .Take(count)
-                    .ToList();
-            }
-        }
+        //public List<NewsArticle> GetLatest(int count = 10)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .Where(n => n.NewsStatus == true)
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .Take(count)
+        //            .ToList();
+        //    }
+        //}
 
-        public (List<NewsArticle> articles, int totalCount) GetWithPagination(int page, int pageSize, bool? status = null, int? categoryId = null)
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                var query = context.NewsArticles
-                    .Include(n => n.Category)
-                    .Include(n => n.Account)
-                    .AsQueryable();
+        //public (List<NewsArticle> articles, int totalCount) GetWithPagination(int page, int pageSize, bool? status = null, int? categoryId = null)
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        var query = context.NewsArticles
+        //            .Include(n => n.Category)
+        //            .Include(n => n.Account)
+        //            .AsQueryable();
 
-                if (status.HasValue)
-                {
-                    query = query.Where(n => n.NewsStatus == status.Value);
-                }
+        //        if (status.HasValue)
+        //        {
+        //            query = query.Where(n => n.NewsStatus == status.Value);
+        //        }
 
-                if (categoryId.HasValue)
-                {
-                    query = query.Where(n => n.CategoryId == categoryId.Value);
-                }
+        //        if (categoryId.HasValue)
+        //        {
+        //            query = query.Where(n => n.CategoryId == categoryId.Value);
+        //        }
 
-                var totalCount = query.Count();
-                var articles = query
-                    .OrderByDescending(n => n.CreatedDate)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
+        //        var totalCount = query.Count();
+        //        var articles = query
+        //            .OrderByDescending(n => n.CreatedDate)
+        //            .Skip((page - 1) * pageSize)
+        //            .Take(pageSize)
+        //            .ToList();
 
-                return (articles, totalCount);
-            }
-        }
+        //        return (articles, totalCount);
+        //    }
+        //}
 
         public bool Add(NewsArticle newsArticle)
         {
@@ -231,7 +227,7 @@ namespace DataAccessObject
             }
         }
 
-        public int GetCountByAuthor(int accountId)
+        public  int GetCountByAuthor(int accountId)
         {
             using (var context = new FunewsManagementContext())
             {
@@ -239,20 +235,20 @@ namespace DataAccessObject
             }
         }
 
-        public Dictionary<string, int> GetStatistics()
-        {
-            using (var context = new FunewsManagementContext())
-            {
-                return new Dictionary<string, int>
-                {
-                    { "TotalArticles", context.NewsArticles.Count() },
-                    { "PublishedArticles", context.NewsArticles.Count(n => n.NewsStatus == true) },
-                    { "DraftArticles", context.NewsArticles.Count(n => n.NewsStatus == false) },
-                    { "Categories", context.Categories.Count() },
-                    { "Authors", context.SystemAccounts.Count() }
-                };
-            }
-        }
+        //public Dictionary<string, int> GetStatistics()
+        //{
+        //    using (var context = new FunewsManagementContext())
+        //    {
+        //        return new Dictionary<string, int>
+        //        {
+        //            { "TotalArticles", context.NewsArticles.Count() },
+        //            { "PublishedArticles", context.NewsArticles.Count(n => n.NewsStatus == true) },
+        //            { "DraftArticles", context.NewsArticles.Count(n => n.NewsStatus == false) },
+        //            { "Categories", context.Categories.Count() },
+        //            { "Authors", context.SystemAccounts.Count() }
+        //        };
+        //    }
+        //}
 
         public List<NewsArticle> AdvancedSearch(string? headline = null, int? categoryId = null, int? authorId = null, 
             bool? status = null, DateTime? fromDate = null, DateTime? toDate = null)

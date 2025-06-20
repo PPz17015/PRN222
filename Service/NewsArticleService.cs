@@ -130,14 +130,14 @@ namespace Service
             return AdvancedSearch(status: true);
         }
 
-        public List<NewsArticle> GetDraftArticles()
-        {
-            return AdvancedSearch(status: false);
-        }
+        //public List<NewsArticle> GetDraftArticles()
+        //{
+        //    return AdvancedSearch(status: false);
+        //}
 
-        public List<NewsArticle> GetArticlesByCurrentUser(int accountId)
-        {
-            return AdvancedSearch(authorId: accountId);
-        }
+        //public List<NewsArticle> GetArticlesByCurrentUser(int accountId)
+        //{
+        //    return AdvancedSearch(authorId: accountId);
+        //}
     }
 } 

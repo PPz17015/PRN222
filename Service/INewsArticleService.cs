@@ -21,7 +21,7 @@ namespace Service
         bool PublishArticle(int articleId, int updatedBy);
         bool UnpublishArticle(int articleId, int updatedBy);
         List<NewsArticle> GetPublishedArticles();
-        List<NewsArticle> GetDraftArticles();
-        List<NewsArticle> GetArticlesByCurrentUser(int accountId);
+        //List<NewsArticle> GetDraftArticles();
+        //List<NewsArticle> GetArticlesByCurrentUser(int accountId);
     }
 } 

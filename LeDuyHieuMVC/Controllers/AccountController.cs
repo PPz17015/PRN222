@@ -48,14 +48,7 @@ namespace LeDuyHieuMVC.Controllers
                 HttpContext.Session.SetString("UserEmail", account.AccountEmail);
                 HttpContext.Session.SetString("UserRole", account.AccountRole.ToString());
 
-                string roleMessage = account.AccountRole switch
-                {
-                    1 => "Successfully logged in as Staff!",
-                    2 => "Successfully logged in as Lecturer!",
-                    _ => "Successfully logged in!"
-                };
-
-                TempData["SuccessMessage"] = roleMessage;
+                
                 return RedirectToAction("Index", "Home");
             }
 
@@ -67,7 +60,6 @@ namespace LeDuyHieuMVC.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            TempData["InfoMessage"] = "You have been successfully logged out!";
             return RedirectToAction("Login");
         }
     }

@@ -32,16 +32,16 @@ namespace Repository
         public bool HeadlineExists(string headline, int? excludeId = null)
             => new NewsArticleDAO().HeadlineExists(headline, excludeId);
 
-        public int GetCountByStatus(bool status)
-            => new NewsArticleDAO().GetCountByStatus(status);
+        //public int GetCountByStatus(bool status)
+        //    => new NewsArticleDAO().GetCountByStatus(status);
 
-        public int GetCountByCategory(int categoryId)
-            => new NewsArticleDAO().GetCountByCategory(categoryId);
+        //public int GetCountByCategory(int categoryId)
+        //    => new NewsArticleDAO().GetCountByCategory(categoryId);
 
-        public int GetCountByAuthor(int accountId)
-            => new NewsArticleDAO().GetCountByAuthor(accountId);
+        //public int GetCountByAuthor(int accountId)
+        //    => new NewsArticleDAO().GetCountByAuthor(accountId);
 
-        public Dictionary<string, int> GetStatistics()
-            => new NewsArticleDAO().GetStatistics();
+        //public Dictionary<string, int> GetStatistics()
+        //    => new NewsArticleDAO().GetStatistics();
     }
 } 

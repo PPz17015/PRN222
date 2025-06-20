@@ -22,9 +22,6 @@ public partial class NewsArticle
     [Required(ErrorMessage = "Vui lòng chọn danh mục")]
     [Range(1, int.MaxValue, ErrorMessage = "Vui lòng chọn danh mục hợp lệ")]
     public int CategoryId { get; set; }
-
-    // [Required(ErrorMessage = "AccountId là bắt buộc")]
-    // [Range(1, int.MaxValue, ErrorMessage = "AccountId phải lớn hơn 0")]
     public int AccountId { get; set; }
 
     public int? UpdatedBy { get; set; }

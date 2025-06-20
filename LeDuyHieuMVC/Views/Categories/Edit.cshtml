@@ -1,7 +1,7 @@
 ﻿@model BussinessObject.Category
 
 @{
-    ViewData["Title"] = "Chỉnh sửa thể loại";
+    ViewData["Title"] = "Edit Category";
 }
 
 <div class="container-fluid">
@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title mb-0">
-                        <i class="fas fa-edit me-2"></i>Chỉnh sửa thể loại: @Model.CategoryName
+                        <i class="fas fa-edit me-2"></i>Edit Category: @Model.CategoryName
                     </h3>
                 </div>
                 <div class="card-body">
@@ -29,19 +29,19 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label asp-for="CategoryName" class="form-label">
-                                        <i class="fas fa-tag me-1"></i>Tên thể loại <span class="text-danger">*</span>
+                                        <i class="fas fa-tag me-1"></i>Category Name <span class="text-danger">*</span>
                                     </label>
-                                    <input asp-for="CategoryName" class="form-control" placeholder="Nhập tên thể loại..." />
+                                    <input asp-for="CategoryName" class="form-control" placeholder="Enter category name..." />
                                     <span asp-validation-for="CategoryName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label asp-for="ParentCategoryId" class="form-label">
-                                        <i class="fas fa-sitemap me-1"></i>Thể loại cha
+                                        <i class="fas fa-sitemap me-1"></i>Parent Category
                                     </label>
                                     <select asp-for="ParentCategoryId" class="form-select">
-                                        <option value="">-- Chọn thể loại cha (tùy chọn) --</option>
+                                        <option value="">-- Select parent category (optional) --</option>
                                         @if (ViewBag.ParentCategories != null)
                                         {
                                             @foreach (var category in (IEnumerable<BussinessObject.Category>)ViewBag.ParentCategories)
@@ -61,17 +61,17 @@
                                         }
                                     </select>
                                     <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
-                                    <div class="form-text">Để trống nếu đây là thể loại gốc. Không thể chọn chính nó làm thể loại cha.</div>
+                                    <div class="form-text">Leave blank if this is a root category. Cannot select itself as parent.</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="CategoryDescription" class="form-label">
-                                <i class="fas fa-align-left me-1"></i>Mô tả
+                                <i class="fas fa-align-left me-1"></i>Description
                             </label>
                             <textarea asp-for="CategoryDescription" class="form-control" rows="3" 
-                                      placeholder="Nhập mô tả cho thể loại..."></textarea>
+                                      placeholder="Enter category description..."></textarea>
                             <span asp-validation-for="CategoryDescription" class="text-danger"></span>
                         </div>
 
@@ -79,22 +79,22 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" asp-for="Status" />
                                 <label class="form-check-label" asp-for="Status">
-                                    <i class="fas fa-toggle-on me-1"></i>Kích hoạt thể loại
+                                    <i class="fas fa-toggle-on me-1"></i>Activate category
                                 </label>
                             </div>
-                            <div class="form-text">Thể loại được kích hoạt sẽ hiển thị trong danh sách</div>
+                            <div class="form-text">Activated categories will be shown in the list</div>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <a asp-action="Index" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-1"></i>Quay lại
+                                <i class="fas fa-arrow-left me-1"></i>Back
                             </a>
                             <div>
                                 <a asp-action="Details" asp-route-id="@Model.CategoryId" class="btn btn-info me-2">
-                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                    <i class="fas fa-eye me-1"></i>View Details
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i>Lưu thay đổi
+                                    <i class="fas fa-save me-1"></i>Save Changes
                                 </button>
                             </div>
                         </div>

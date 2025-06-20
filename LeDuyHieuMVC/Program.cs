@@ -16,13 +16,9 @@ builder.Services.AddSession(options =>
 
 // Register services
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<AccountRepository>();
-
-// Register Category services
+builder.Services.AddScoped<IAccountRepository,AccountRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-// Register NewsArticle services
 builder.Services.AddScoped<INewsArticleService, NewsArticleService>();
 builder.Services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
 

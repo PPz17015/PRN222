@@ -20,9 +20,9 @@ namespace Repository
 
         bool HeadlineExists(string headline, int? excludeId = null);
 
-        int GetCountByStatus(bool status);
-        int GetCountByCategory(int categoryId);
-        int GetCountByAuthor(int accountId);
-        Dictionary<string, int> GetStatistics();
+        //int GetCountByStatus(bool status);
+        //int GetCountByCategory(int categoryId);
+        //int GetCountByAuthor(int accountId);
+        //Dictionary<string, int> GetStatistics();
     }
 }

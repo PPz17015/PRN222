@@ -23,8 +23,8 @@
                         </div>
                     }
 
-                    <!-- DEBUG INFO -->
-                    @if (ViewBag.DebugUserId != null)
+                    @* <!-- DEBUG INFO -->
+                    <!-- @if (ViewBag.DebugUserId != null)
                     {
                         <div class="alert alert-info">
                             <h6>Debug Info:</h6>
@@ -48,12 +48,11 @@
                                 <p><strong>Exception:</strong> @ViewBag.DebugException</p>
                             }
                         </div>
-                    }
+                    } --> *@
 
                     <form asp-action="Create" method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-                        
-                        <!-- Hidden field for AccountId -->
+
                         <input type="hidden" asp-for="AccountId" value="@ViewBag.CurrentUserId" />
                         
                         <div class="row">

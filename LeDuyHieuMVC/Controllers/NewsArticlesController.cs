@@ -34,7 +34,7 @@ namespace LeDuyHieuMVC.Controllers
             {
                 articles = _newsArticleService.GetPublishedArticles();
             }
-            else if (userRole == "1" || userRole == "3")
+            else if (userRole == "1")
             {
                 articles = _newsArticleService.GetAll();
             }
@@ -44,6 +44,7 @@ namespace LeDuyHieuMVC.Controllers
             }
 
             ViewBag.UserRole = userRole;
+            ViewBag.CurrentUserId = GetCurrentUserId();
             return View(articles);
         }
 
@@ -80,7 +81,7 @@ namespace LeDuyHieuMVC.Controllers
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            if (userRole != "1" && userRole != "3")
+            if (userRole != "1")
             {
                 return Forbid();
             }
@@ -99,7 +100,7 @@ namespace LeDuyHieuMVC.Controllers
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            if (userRole != "1" && userRole != "3")
+            if (userRole != "1")
             {
                 return Forbid();
             }
@@ -192,7 +193,7 @@ namespace LeDuyHieuMVC.Controllers
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            if (userRole != "1" && userRole != "3")
+            if (userRole != "1")
             {
                 return Forbid();
             }
@@ -222,7 +223,7 @@ namespace LeDuyHieuMVC.Controllers
         {
             var userRole = HttpContext.Session.GetString("UserRole");
             
-            if (userRole != "1" && userRole != "3")
+            if (userRole != "1")
             {
                 return Forbid();
             }
@@ -239,13 +240,10 @@ namespace LeDuyHieuMVC.Controllers
                 ViewBag.Categories = _categoryService.GetAll();
                 return View(newsArticle);
             }
-
-            // Set update information
             newsArticle.UpdatedBy = currentUserId;
             newsArticle.UpdatedDate = DateTime.Now;
             newsArticle.ModifiedDate = DateTime.Now;
 
-            // Remove Account and Category from ModelState validation as they are navigation properties
             ModelState.Remove("Account");
             ModelState.Remove("Category");
 

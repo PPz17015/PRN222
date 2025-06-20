@@ -1,7 +1,7 @@
 @using BussinessObject
 @model SystemAccount
 @{
-    ViewData["Title"] = "Chỉnh sửa tài khoản - FU News Management";
+    ViewData["Title"] = "Edit Account";
 }
 
 <div class="container-fluid">
@@ -25,19 +25,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="@Url.Action("ManageAccounts", "Admin")">
                             <i class="fas fa-users me-2"></i>
-                            Quản lý tài khoản
+                            Manage Accounts
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("ManageNews", "Admin")">
                             <i class="fas fa-newspaper me-2"></i>
-                            Quản lý bài đăng
+                            Manage Articles
                         </a>
                     </li>
                     <li class="nav-item mt-3">
                         <a class="nav-link text-danger" href="@Url.Action("Logout", "Account")">
                             <i class="fas fa-sign-out-alt me-2"></i>
-                            Đăng xuất
+                            Logout
                         </a>
                     </li>
                 </ul>
@@ -49,12 +49,12 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">
                     <i class="fas fa-user-edit me-2"></i>
-                    Chỉnh sửa tài khoản
+                    Edit Account
                 </h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <a href="@Url.Action("ManageAccounts", "Admin")" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-2"></i>
-                        Quay lại
+                        Back
                     </a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                         <div class="card-header">
                             <h5 class="mb-0">
                                 <i class="fas fa-user-edit me-2"></i>
-                                Thông tin tài khoản (ID: @Model.AccountId)
+                               Account Information (ID: @Model.AccountId)
                             </h5>
                         </div>
                         <div class="card-body">
@@ -87,7 +87,7 @@
                                         <div class="mb-3">
                                             <label for="AccountName" class="form-label">
                                                 <i class="fas fa-user me-2"></i>
-                                                Tên tài khoản <span class="text-danger">*</span>
+                                                Account Name <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" id="AccountName" name="AccountName" 
                                                    value="@Model.AccountName" required>
@@ -112,14 +112,14 @@
                                         <div class="mb-3">
                                             <label for="AccountPassword" class="form-label">
                                                 <i class="fas fa-lock me-2"></i>
-                                                Mật khẩu <span class="text-danger">*</span>
+                                                Password <span class="text-danger">*</span>
                                             </label>
                                             <input type="password" class="form-control" id="AccountPassword" name="AccountPassword" 
                                                    value="@Model.AccountPassword" required>
                                             <span asp-validation-for="AccountPassword" class="text-danger"></span>
                                             <div class="form-text">
                                                 <i class="fas fa-info-circle me-1"></i>
-                                                Nhập mật khẩu mới hoặc giữ nguyên mật khẩu hiện tại
+                                                Enter a new password or keep the current password
                                             </div>
                                         </div>
                                     </div>
@@ -127,10 +127,10 @@
                                         <div class="mb-3">
                                             <label for="AccountRole" class="form-label">
                                                 <i class="fas fa-user-tag me-2"></i>
-                                                Vai trò <span class="text-danger">*</span>
+                                                Role <span class="text-danger">*</span>
                                             </label>
                                             <select class="form-select" id="AccountRole" name="AccountRole" required>
-                                                <option value="">-- Chọn vai trò --</option>
+                                                <option value="">-- Select Role --</option>
                                                 @if (Model.AccountRole == 1)
                                                 {
                                                     <option value="1" selected>Staff</option>
@@ -155,10 +155,10 @@
                                 <div class="mb-3">
                                     <div class="form-text">
                                         <i class="fas fa-info-circle me-2"></i>
-                                        <strong>Lưu ý:</strong> 
+                                        <strong>Note:</strong> 
                                         <ul class="mb-0 mt-2">
-                                            <li><strong>Staff:</strong> Nhân viên có quyền truy cập hạn chế</li>
-                                            <li><strong>Lecturer:</strong> Giảng viên có quyền quản lý nội dung</li>
+                                            <li><strong>Staff:</strong> Employee with limited access rights</li>
+                                            <li><strong>Lecturer:</strong> Faculty member with content management rights</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -166,11 +166,11 @@
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <a href="@Url.Action("ManageAccounts", "Admin")" class="btn btn-secondary me-md-2">
                                         <i class="fas fa-times me-2"></i>
-                                        Hủy
+                                        Cancel
                                     </a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-save me-2"></i>
-                                        Cập nhật tài khoản
+                                        Update Account
                                     </button>
                                 </div>
                             </form>
